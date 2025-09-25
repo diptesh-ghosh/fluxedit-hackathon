@@ -46,9 +46,9 @@ export function AuthButtons() {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 rounded-xl border border-(--glass-border) bg-(--glass-bg)/50 px-3 py-2 backdrop-blur-md">
-        <div className="size-2 animate-pulse rounded-full bg-(--accent)" />
-        <span className="text-sm text-(--muted-foreground)">Loading session…</span>
+      <div className="flex items-center gap-2 rounded-xl border border-border bg-card/50 px-3 py-2 backdrop-blur-md">
+        <div className="size-2 animate-pulse rounded-full bg-accent" />
+        <span className="text-sm text-muted-foreground">Loading session…</span>
       </div>
     )
   }
@@ -57,7 +57,7 @@ export function AuthButtons() {
     return (
       <Button
         onClick={signInWithGoogle}
-        className="rounded-xl border border-(--glass-border) bg-(--glass-bg) text-(--foreground) hover:bg-(--glass-bg-hover) backdrop-blur-md"
+        className="rounded-xl border border-border bg-card text-foreground hover:bg-card/80 backdrop-blur-md"
         variant="outline"
       >
         Continue with Google
@@ -68,15 +68,15 @@ export function AuthButtons() {
   const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email || "User"
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-(--glass-border) bg-(--glass-bg)/60 px-3 py-2 backdrop-blur-md">
-      <Avatar className="size-7 ring-1 ring-(--glass-border)">
+    <div className="flex items-center gap-3 rounded-xl border border-border bg-card/60 px-3 py-2 backdrop-blur-md">
+      <Avatar className="size-7 ring-1 ring-border">
         <AvatarImage
           alt="User avatar"
           src={user.user_metadata?.avatar_url || "/placeholder.svg?height=64&width=64&query=user-avatar"}
         />
         <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
       </Avatar>
-      <span className="text-sm text-(--muted-foreground)">{name}</span>
+      <span className="text-sm text-muted-foreground">{name}</span>
       <Button onClick={signOut} size="sm" variant="ghost" className="ml-2">
         Sign out
       </Button>
