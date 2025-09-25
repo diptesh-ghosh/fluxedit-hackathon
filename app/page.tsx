@@ -6,7 +6,7 @@ import { VersionHistory } from "@/components/version-history"
 import { ImageCanvas } from "@/components/image-canvas"
 import { AIPromptInterface } from "@/components/ai-prompt-interface"
 import { OnboardingModal } from "@/components/onboarding-modal"
-import { FloatingToolbar } from "@/components/floating-toolbar"
+
 // HACKATHON MODE: Auth components disabled
 // import { AuthGate } from "@/components/auth/auth-gate"
 // import { SupabaseDebug } from "@/components/debug/supabase-debug"
@@ -159,7 +159,7 @@ export default function FluxEditApp() {
         </GlassCard>
       </main>
 
-      <FloatingToolbar />
+
 
       {/* Auth Gate Modal - HACKATHON MODE: Disabled */}
       {/* <AuthGate 

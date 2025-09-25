@@ -171,14 +171,16 @@ export function AIPromptInterface({
         </div>
 
         {showAdvanced && (
-          <div className="space-y-4 p-3 bg-muted/10 rounded-lg border border-border/30 relative z-10">
+          <div className="space-y-6 p-4 bg-card/50 rounded-lg border border-border/50 backdrop-blur-sm">
             {/* Strength Parameter */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Strength</span>
-                <span className="font-medium">{processingParams.strength.toFixed(2)}</span>
+                <span className="text-foreground font-medium">Strength</span>
+                <span className="font-mono text-primary bg-primary/10 px-2 py-1 rounded text-xs">
+                  {processingParams.strength.toFixed(2)}
+                </span>
               </div>
-              <div className="px-1">
+              <div className="py-2">
                 <Slider
                   value={[processingParams.strength]}
                   step={0.01}
@@ -186,21 +188,23 @@ export function AIPromptInterface({
                   max={1}
                   onValueChange={(value) => onParamsChange?.({ ...processingParams, strength: value[0] })}
                   disabled={isProcessing}
-                  className="w-full h-6"
+                  className="w-full"
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
-                How much the AI should change the image (0 = minimal, 1 = maximum)
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Controls how much the AI modifies the image (0 = subtle changes, 1 = dramatic transformation)
               </p>
             </div>
 
             {/* Guidance Parameter */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Guidance</span>
-                <span className="font-medium">{processingParams.guidance.toFixed(1)}</span>
+                <span className="text-foreground font-medium">Guidance</span>
+                <span className="font-mono text-primary bg-primary/10 px-2 py-1 rounded text-xs">
+                  {processingParams.guidance.toFixed(1)}
+                </span>
               </div>
-              <div className="px-1">
+              <div className="py-2">
                 <Slider
                   value={[processingParams.guidance]}
                   step={0.1}
@@ -208,11 +212,11 @@ export function AIPromptInterface({
                   max={10}
                   onValueChange={(value) => onParamsChange?.({ ...processingParams, guidance: value[0] })}
                   disabled={isProcessing}
-                  className="w-full h-6"
+                  className="w-full"
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
-                How closely the AI should follow your prompt (0 = loose, 10 = strict)
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                How strictly the AI follows your prompt (0 = creative interpretation, 10 = exact adherence)
               </p>
             </div>
           </div>
@@ -223,14 +227,20 @@ export function AIPromptInterface({
       <div className="flex-1 flex flex-col">
         <h3 className="text-sm font-medium text-foreground mb-2">Custom Command</h3>
         <Textarea
-          placeholder="Describe what you want to do with your image..."
+          placeholder="Type your custom AI command here... (e.g., 'make the sky more dramatic', 'remove background', 'add vintage filter')"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="flex-1 resize-none bg-input border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20"
+          onKeyDown={(e) => {
+            // Allow all keyboard interactions
+            e.stopPropagation()
+          }}
+          className="flex-1 resize-none bg-background border-2 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all duration-200 text-foreground placeholder:text-muted-foreground"
           disabled={isProcessing}
           aria-label="AI processing prompt"
           aria-describedby="prompt-help"
-          style={{ minHeight: '80px' }}
+          style={{ minHeight: '100px' }}
+          autoComplete="off"
+          spellCheck="true"
         />
 
         {/* Error Display */}
