@@ -8,12 +8,25 @@ import { AIPromptInterface } from "@/components/ai-prompt-interface"
 import { OnboardingModal } from "@/components/onboarding-modal"
 import { FloatingToolbar } from "@/components/floating-toolbar"
 import { AuthGate } from "@/components/auth/auth-gate"
+import { SupabaseDebug } from "@/components/debug/supabase-debug"
 import { GlassCard } from "@/components/ui/glass-card"
 import { useFALIntegration } from "@/hooks/use-fal-integration"
 import { keyboardShortcuts, checkBrowserCompatibility, announceToScreenReader } from "@/utils/accessibility"
 
 export default function FluxEditApp() {
   const [showOnboarding, setShowOnboarding] = useState(true)
+  const [authError, setAuthError] = useState<string | null>(null)
+  
+  // Check for auth errors in URL params
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const error = urlParams.get('error')
+    if (error) {
+      setAuthError(decodeURIComponent(error))
+      // Clean up URL
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [])
   
   // Use the FAL integration hook for centralized state management
   const {
@@ -146,6 +159,30 @@ export default function FluxEditApp() {
 
       {/* Onboarding Modal */}
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
+
+      {/* Auth Error Display */}
+      {authError && (
+        <div className="fixed top-4 right-4 z-50 max-w-md">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+            <div className="flex items-start gap-2">
+              <div className="text-destructive">⚠️</div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-destructive">Authentication Error</p>
+                <p className="text-xs text-destructive/80 mt-1">{authError}</p>
+                <button 
+                  onClick={() => setAuthError(null)}
+                  className="text-xs text-destructive/60 hover:text-destructive mt-2"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Debug Component (remove in production) */}
+      <SupabaseDebug />
     </div>
   )
 }
