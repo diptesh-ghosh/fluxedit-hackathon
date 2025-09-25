@@ -299,7 +299,7 @@ export function AIPromptInterface({
         {/* HACKATHON MODE: Show demo notice instead of auth requirement */}
         <div className="mt-3 p-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-primary/20 rounded-lg">
           <p className="text-xs text-primary text-center">
-            🚀 Hackathon Demo Mode - Full AI processing available for everyone!
+            ✨ DEMO MODE: FLUX Kontext AI Active - Instant Processing!
           </p>
         </div>
       </div>

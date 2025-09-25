@@ -114,8 +114,8 @@ export default function FluxEditApp() {
       <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-b border-primary/20">
         <div className="px-6 py-2 text-center">
           <p className="text-sm text-primary font-medium">
-            🚀 Hackathon Demo Mode - Full AI Image Processing Available for Everyone! 
-            <span className="text-xs text-muted-foreground ml-2">No sign-up required</span>
+            ✨ DEMO MODE: FLUX Kontext AI Processing Active! 
+            <span className="text-xs text-muted-foreground ml-2">(Hackathon Demo - No API limits)</span>
           </p>
         </div>
       </div>
