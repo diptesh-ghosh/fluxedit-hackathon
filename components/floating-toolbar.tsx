@@ -2,7 +2,7 @@
 
 import { AnimatedButton } from "@/components/ui/animated-button"
 import { GlassCard } from "@/components/ui/glass-card"
-import { Undo2, Redo2, Save, Share2 } from "lucide-react"
+import { Undo2, Redo2, Save } from "lucide-react"
 
 export function FloatingToolbar() {
   return (
@@ -16,10 +16,6 @@ export function FloatingToolbar() {
       <div className="w-px h-6 bg-border/50 mx-1" />
       <AnimatedButton variant="ghost" size="sm">
         <Save className="w-4 h-4" />
-      </AnimatedButton>
-      <AnimatedButton variant="gradient" size="sm">
-        <Share2 className="w-4 h-4 mr-2" />
-        Share
       </AnimatedButton>
     </GlassCard>
   )

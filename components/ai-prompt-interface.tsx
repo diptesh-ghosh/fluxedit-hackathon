@@ -124,8 +124,8 @@ export function AIPromptInterface({
       {/* Preset Commands */}
       <div className="mb-4">
         <h3 className="text-sm font-medium text-foreground mb-2">Quick Actions</h3>
-        <ScrollArea className="h-32">
-          <div className="flex flex-wrap gap-2">
+        <ScrollArea className="h-32 max-h-32">
+          <div className="flex flex-wrap gap-2 pr-2">
             {presetCommands.map((preset) => (
               <Badge
                 key={preset.label}
@@ -171,43 +171,47 @@ export function AIPromptInterface({
         </div>
 
         {showAdvanced && (
-          <div className="space-y-4 p-3 bg-muted/10 rounded-lg border border-border/30">
+          <div className="space-y-4 p-3 bg-muted/10 rounded-lg border border-border/30 relative z-10">
             {/* Strength Parameter */}
-            <div>
-              <div className="flex items-center justify-between text-sm mb-2">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Strength</span>
                 <span className="font-medium">{processingParams.strength.toFixed(2)}</span>
               </div>
-              <Slider
-                value={[processingParams.strength]}
-                step={0.01}
-                min={0}
-                max={1}
-                onValueChange={(value) => onParamsChange?.({ ...processingParams, strength: value[0] })}
-                disabled={isProcessing}
-                className="w-full"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
+              <div className="px-1">
+                <Slider
+                  value={[processingParams.strength]}
+                  step={0.01}
+                  min={0}
+                  max={1}
+                  onValueChange={(value) => onParamsChange?.({ ...processingParams, strength: value[0] })}
+                  disabled={isProcessing}
+                  className="w-full h-6"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
                 How much the AI should change the image (0 = minimal, 1 = maximum)
               </p>
             </div>
 
             {/* Guidance Parameter */}
-            <div>
-              <div className="flex items-center justify-between text-sm mb-2">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Guidance</span>
                 <span className="font-medium">{processingParams.guidance.toFixed(1)}</span>
               </div>
-              <Slider
-                value={[processingParams.guidance]}
-                step={0.1}
-                min={0}
-                max={10}
-                onValueChange={(value) => onParamsChange?.({ ...processingParams, guidance: value[0] })}
-                disabled={isProcessing}
-                className="w-full"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
+              <div className="px-1">
+                <Slider
+                  value={[processingParams.guidance]}
+                  step={0.1}
+                  min={0}
+                  max={10}
+                  onValueChange={(value) => onParamsChange?.({ ...processingParams, guidance: value[0] })}
+                  disabled={isProcessing}
+                  className="w-full h-6"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
                 How closely the AI should follow your prompt (0 = loose, 10 = strict)
               </p>
             </div>
@@ -222,10 +226,11 @@ export function AIPromptInterface({
           placeholder="Describe what you want to do with your image..."
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="flex-1 resize-none bg-input border-border/50 focus:border-primary"
+          className="flex-1 resize-none bg-input border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20"
           disabled={isProcessing}
           aria-label="AI processing prompt"
           aria-describedby="prompt-help"
+          style={{ minHeight: '80px' }}
         />
 
         {/* Error Display */}

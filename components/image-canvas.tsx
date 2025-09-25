@@ -86,7 +86,7 @@ export function ImageCanvas({
           <AnimatedButton variant="outline" size="sm" onClick={() => setZoom(Math.min(200, zoom + 25))}>
             <ZoomIn className="w-4 h-4" />
           </AnimatedButton>
-          <AnimatedButton variant="outline" size="sm">
+          <AnimatedButton variant="outline" size="sm" onClick={() => setZoom(100)} title="Reset zoom">
             <RotateCw className="w-4 h-4" />
           </AnimatedButton>
           {canShowComparison && onToggleComparison && (
