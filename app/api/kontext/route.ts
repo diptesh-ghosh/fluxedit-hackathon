@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 // IMPORTANT: We follow the project's Fal integration guideline to use @fal-ai/serverless.
-import { fal } from "@fal-ai/serverless"
+import { fal } from '@fal-ai/client';
+
 
 export const runtime = "nodejs"
 
