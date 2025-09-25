@@ -148,11 +148,11 @@ export function useFALIntegration() {
       throw new Error('No image selected')
     }
 
-    // Check authentication before processing
-    if (!isAuthenticated) {
-      setShowAuthGate(true)
-      return
-    }
+    // HACKATHON MODE: Skip authentication check - allow all users to process images
+    // if (!isAuthenticated) {
+    //   setShowAuthGate(true)
+    //   return
+    // }
 
     try {
       // Convert data URL to File for processing

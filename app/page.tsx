@@ -7,8 +7,9 @@ import { ImageCanvas } from "@/components/image-canvas"
 import { AIPromptInterface } from "@/components/ai-prompt-interface"
 import { OnboardingModal } from "@/components/onboarding-modal"
 import { FloatingToolbar } from "@/components/floating-toolbar"
-import { AuthGate } from "@/components/auth/auth-gate"
-import { SupabaseDebug } from "@/components/debug/supabase-debug"
+// HACKATHON MODE: Auth components disabled
+// import { AuthGate } from "@/components/auth/auth-gate"
+// import { SupabaseDebug } from "@/components/debug/supabase-debug"
 import { GlassCard } from "@/components/ui/glass-card"
 import { useFALIntegration } from "@/hooks/use-fal-integration"
 import { keyboardShortcuts, checkBrowserCompatibility, announceToScreenReader } from "@/utils/accessibility"
@@ -109,8 +110,18 @@ export default function FluxEditApp() {
       {/* Header */}
       <Header />
 
+      {/* Hackathon Demo Notice */}
+      <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-b border-primary/20">
+        <div className="px-6 py-2 text-center">
+          <p className="text-sm text-primary font-medium">
+            🚀 Hackathon Demo Mode - Full AI Image Processing Available for Everyone! 
+            <span className="text-xs text-muted-foreground ml-2">No sign-up required</span>
+          </p>
+        </div>
+      </div>
+
       {/* Main Layout - Three Panel Design */}
-      <main className="flex h-[calc(100vh-4rem)] gap-4 p-4">
+      <main className="flex h-[calc(100vh-7rem)] gap-4 p-4">
         {/* Left Panel - Version History */}
         <GlassCard className="w-80 p-4 overflow-hidden">
           <VersionHistory 
@@ -150,12 +161,12 @@ export default function FluxEditApp() {
 
       <FloatingToolbar />
 
-      {/* Auth Gate Modal */}
-      <AuthGate 
+      {/* Auth Gate Modal - HACKATHON MODE: Disabled */}
+      {/* <AuthGate 
         isOpen={showAuthGate}
         onClose={() => setShowAuthGate(false)}
         feature="AI image processing"
-      />
+      /> */}
 
       {/* Onboarding Modal */}
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
@@ -181,8 +192,8 @@ export default function FluxEditApp() {
         </div>
       )}
 
-      {/* Debug Component (remove in production) */}
-      <SupabaseDebug />
+      {/* Debug Component - HACKATHON MODE: Disabled */}
+      {/* <SupabaseDebug /> */}
     </div>
   )
 }

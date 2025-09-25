@@ -32,27 +32,23 @@ export function Header() {
 
       {/* User Profile & Auth */}
       <div className="flex items-center gap-4">
+        {/* HACKATHON MODE: Show demo badge and optional auth */}
+        <Badge variant="default" className="text-xs bg-gradient-to-r from-purple-500 to-blue-500">
+          <Sparkles className="w-3 h-3 mr-1" />
+          Hackathon Demo
+        </Badge>
+        
         {!isAuthenticated ? (
-          <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="text-xs">
-              <Crown className="w-3 h-3 mr-1" />
-              Guest Mode
-            </Badge>
-            <AnimatedButton 
-              variant="gradient" 
-              size="sm" 
-              onClick={handleAuthAction}
-              disabled={loading}
-            >
-              Sign in to Edit
-            </AnimatedButton>
-          </div>
+          <AnimatedButton 
+            variant="outline" 
+            size="sm" 
+            onClick={handleAuthAction}
+            disabled={loading}
+          >
+            Optional Sign In
+          </AnimatedButton>
         ) : (
           <div className="flex items-center gap-3">
-            <Badge variant="default" className="text-xs bg-gradient-to-r from-purple-500 to-blue-500">
-              <Crown className="w-3 h-3 mr-1" />
-              Pro User
-            </Badge>
             <Avatar className="w-8 h-8">
               <AvatarImage src={user?.user_metadata?.avatar_url} />
               <AvatarFallback className="bg-muted">
