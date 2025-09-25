@@ -2,9 +2,21 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AnimatedButton } from "@/components/ui/animated-button"
-import { Sparkles, User } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Sparkles, User, Crown } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
 
 export function Header() {
+  const { user, isAuthenticated, signInWithGoogle, signOut, loading } = useAuth()
+
+  const handleAuthAction = async () => {
+    if (isAuthenticated) {
+      await signOut()
+    } else {
+      await signInWithGoogle()
+    }
+  }
+
   return (
     <header className="h-16 glass-strong border-b border-border/50 px-6 flex items-center justify-between">
       {/* Logo */}
@@ -20,15 +32,43 @@ export function Header() {
 
       {/* User Profile & Auth */}
       <div className="flex items-center gap-4">
-        <AnimatedButton variant="outline" size="sm" className="glass border-border/50 bg-transparent">
-          Sign in with Google
-        </AnimatedButton>
-        <Avatar className="w-8 h-8">
-          <AvatarImage src="/placeholder.svg" />
-          <AvatarFallback className="bg-muted">
-            <User className="w-4 h-4" />
-          </AvatarFallback>
-        </Avatar>
+        {!isAuthenticated ? (
+          <div className="flex items-center gap-3">
+            <Badge variant="secondary" className="text-xs">
+              <Crown className="w-3 h-3 mr-1" />
+              Guest Mode
+            </Badge>
+            <AnimatedButton 
+              variant="gradient" 
+              size="sm" 
+              onClick={handleAuthAction}
+              disabled={loading}
+            >
+              Sign in to Edit
+            </AnimatedButton>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <Badge variant="default" className="text-xs bg-gradient-to-r from-purple-500 to-blue-500">
+              <Crown className="w-3 h-3 mr-1" />
+              Pro User
+            </Badge>
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={user?.user_metadata?.avatar_url} />
+              <AvatarFallback className="bg-muted">
+                <User className="w-4 h-4" />
+              </AvatarFallback>
+            </Avatar>
+            <AnimatedButton 
+              variant="outline" 
+              size="sm" 
+              onClick={handleAuthAction}
+              disabled={loading}
+            >
+              Sign Out
+            </AnimatedButton>
+          </div>
+        )}
       </div>
     </header>
   )

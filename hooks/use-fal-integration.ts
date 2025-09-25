@@ -23,10 +23,14 @@ import {
   createCleanupManager, 
   preloadImage 
 } from '@/utils/performance'
+import { useAuth } from '@/contexts/auth-context'
 
 const STORAGE_KEY = 'fal-integration-state'
 
 export function useFALIntegration() {
+  // Auth context
+  const { isAuthenticated } = useAuth()
+  
   // Core state
   const [currentImage, setCurrentImage] = useState<string | null>(null)
   const [originalImage, setOriginalImage] = useState<string | null>(null)
@@ -36,6 +40,7 @@ export function useFALIntegration() {
   const [processingParams, setProcessingParams] = useState<ProcessingParams>(DEFAULT_PROCESSING_PARAMS)
   const [showComparison, setShowComparison] = useState(false)
   const [currentVersionId, setCurrentVersionId] = useState<string | undefined>()
+  const [showAuthGate, setShowAuthGate] = useState(false)
 
   // Load state from compressed storage on mount
   useEffect(() => {
@@ -143,6 +148,12 @@ export function useFALIntegration() {
       throw new Error('No image selected')
     }
 
+    // Check authentication before processing
+    if (!isAuthenticated) {
+      setShowAuthGate(true)
+      return
+    }
+
     try {
       // Convert data URL to File for processing
       const response = await fetch(currentImage)
@@ -210,7 +221,7 @@ export function useFALIntegration() {
       
       throw classifiedError
     }
-  }, [currentImage])
+  }, [currentImage, isAuthenticated])
 
   // Handle version selection
   const handleVersionSelect = useCallback((version: ImageVersion) => {
@@ -311,9 +322,14 @@ export function useFALIntegration() {
     handleDownload,
     clearAll,
 
+    // Auth gate
+    showAuthGate,
+    setShowAuthGate,
+
     // Computed values
     hasProcessedImage: Boolean(processedImage),
     canShowComparison: Boolean(originalImage && processedImage),
-    isProcessing: processingState.isProcessing
+    isProcessing: processingState.isProcessing,
+    requiresAuth: !isAuthenticated
   }
 }

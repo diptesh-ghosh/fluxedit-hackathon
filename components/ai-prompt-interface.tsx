@@ -6,8 +6,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { AnimatedButton } from "@/components/ui/animated-button"
 import { Slider } from "@/components/ui/slider"
-import { Sparkles, Wand2, RotateCcw, AlertCircle } from "lucide-react"
+import { Sparkles, Wand2, RotateCcw, AlertCircle, Lock } from "lucide-react"
 import { EnhancedAIPromptInterfaceProps, DEFAULT_PROCESSING_PARAMS } from "@/types/fal-integration"
+import { useAuth } from "@/contexts/auth-context"
 
 interface AIPromptInterfaceProps extends EnhancedAIPromptInterfaceProps {
   // Maintain backward compatibility
@@ -73,6 +74,7 @@ export function AIPromptInterface({
 }: AIPromptInterfaceProps) {
   const [prompt, setPrompt] = useState("")
   const [showAdvanced, setShowAdvanced] = useState(false)
+  const { isAuthenticated } = useAuth()
 
   const isProcessing = processingState?.isProcessing || false
   const processingError = processingState?.error
@@ -284,6 +286,11 @@ export function AIPromptInterface({
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
               Processing...
             </>
+          ) : !isAuthenticated ? (
+            <>
+              <Lock className="w-4 h-4 mr-2" />
+              Sign in to Process
+            </>
           ) : (
             <>
               <Sparkles className="w-4 h-4 mr-2" />
@@ -291,6 +298,14 @@ export function AIPromptInterface({
             </>
           )}
         </AnimatedButton>
+
+        {!isAuthenticated && (
+          <div className="mt-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+            <p className="text-xs text-primary text-center">
+              🎉 Sign in with Google to unlock unlimited AI processing and save your projects
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Help Text */}

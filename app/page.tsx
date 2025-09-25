@@ -7,6 +7,7 @@ import { ImageCanvas } from "@/components/image-canvas"
 import { AIPromptInterface } from "@/components/ai-prompt-interface"
 import { OnboardingModal } from "@/components/onboarding-modal"
 import { FloatingToolbar } from "@/components/floating-toolbar"
+import { AuthGate } from "@/components/auth/auth-gate"
 import { GlassCard } from "@/components/ui/glass-card"
 import { useFALIntegration } from "@/hooks/use-fal-integration"
 import { keyboardShortcuts, checkBrowserCompatibility, announceToScreenReader } from "@/utils/accessibility"
@@ -33,7 +34,10 @@ export default function FluxEditApp() {
     handleDownload,
     hasProcessedImage,
     canShowComparison,
-    isProcessing
+    isProcessing,
+    showAuthGate,
+    setShowAuthGate,
+    requiresAuth
   } = useFALIntegration()
 
   // Set up keyboard shortcuts and accessibility features
@@ -132,6 +136,13 @@ export default function FluxEditApp() {
       </main>
 
       <FloatingToolbar />
+
+      {/* Auth Gate Modal */}
+      <AuthGate 
+        isOpen={showAuthGate}
+        onClose={() => setShowAuthGate(false)}
+        feature="AI image processing"
+      />
 
       {/* Onboarding Modal */}
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
