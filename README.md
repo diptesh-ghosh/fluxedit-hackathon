@@ -42,7 +42,7 @@ A revolutionary AI photo editing application built with Next.js, featuring seaml
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/fluxedit-hackathon.git
+   git clone https://github.com/diptesh-ghosh/fluxedit-hackathon.git
    cd fluxedit-hackathon
    ```
 

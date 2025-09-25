@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
-// IMPORTANT: We follow the project's Fal integration guideline to use @fal-ai/serverless.
-import { fal } from "@fal-ai/serverless"
+import * as fal from "@fal-ai/client"
 
 export const runtime = "nodejs"
 
@@ -32,12 +31,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing FAL_KEY environment variable." }, { status: 500 })
     }
 
-    const client = fal({ credentials: falKey })
+    // Configure FAL client
+    fal.config({
+      credentials: falKey,
+    })
 
     // Submit job to FLUX Kontext
     // We pass minimal inputs: prompt + image_url (Data URI).
     // Optional params like strength/guidance/seed are forwarded if present.
-    const result = await client.subscribe("fal-ai/flux-pro/kontext", {
+    const result = await fal.subscribe("fal-ai/flux-pro/kontext", {
       input: {
         prompt,
         image_url: imageDataUri,
@@ -45,8 +47,7 @@ export async function POST(req: Request) {
         ...(typeof guidance === "number" ? { guidance } : {}),
         ...(typeof seed === "number" ? { seed } : {}),
       },
-      // You can enable logs or webhooks if needed:
-      // logs: true,
+      logs: true,
     })
 
     // The result schema can vary; normalize common fields.
